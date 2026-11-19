@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 — 2026-11-20
+
+- Uses about half the memory while the window is open: the Edge app window now starts with low-memory settings
+  (no graphics acceleration, extensions, sync, background updates or spare page processes). Measured on Windows 10:
+  ~250 MB → ~130 MB for the window. The ~44 MB background part quits 15 minutes after you close it.
+- Publisher name is now `optimus-ook-prime-gluk`.
+
 ## 1.0.0 — 2026-11-19
 
 First public release.

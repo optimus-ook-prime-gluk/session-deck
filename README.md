@@ -88,6 +88,8 @@ Just curious? Start Menu → **Session Deck (demo with sample sessions)** runs i
 
 - **Python 3 standard library** web server + a single HTML page shown in an Edge app window (`--app`), packaged with
   PyInstaller and installed with Inno Setup.
+  The window starts with low-memory settings (no graphics acceleration, extensions or sync): about 130 MB while it's
+  open. After you close it, the ~44 MB background part quits within 15 minutes.
 - Transcripts are parsed **incrementally** (only new bytes are read), so it stays fast while sessions grow.
 - Desktop-app conversations are matched to their transcripts through the app's local session list, and opened with
   the app's `claude://` link.

@@ -45,7 +45,7 @@ import suggest as suggest_engine  # noqa: E402  (local, offline)
 
 APP_NAME = "Session Deck"
 APP_ID = "SessionDeck"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 REPO_URL = "https://github.com/optimus-ook-prime-gluk/session-deck"
 DEMO = "--demo" in sys.argv
 
@@ -1112,12 +1112,31 @@ def find_edge():
     return shutil.which("msedge")
 
 
+# Low-memory settings for the app window. It only ever shows this one local page, so Edge's
+# browser extras (graphics acceleration, extensions, sync, updates, spare/isolated renderers)
+# are switched off. Measured on Windows 10: ~250 MB -> ~125-146 MB for the window's processes.
+EDGE_LOW_MEMORY_FLAGS = [
+    "--disable-gpu",
+    "--disable-extensions",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-sync",
+    "--disable-default-apps",
+    "--no-pings",
+    "--renderer-process-limit=1",
+    "--process-per-site",
+    "--disable-features=Translate,OptimizationHints,MediaRouter,AutofillServerCommunication,"
+    "msEdgeShoppingUI,msUndersideButton,EdgeCollections,msWebAssist,"
+    "SpareRendererForSitePerProcess,BackForwardCache",
+]
+
+
 def open_window(url):
     edge = find_edge()
     if edge:
         subprocess.Popen([edge, "--app=" + url, "--window-size=1320,880",
                           "--user-data-dir=" + str(EDGE_PROFILE), "--no-first-run",
-                          "--no-default-browser-check"])
+                          "--no-default-browser-check"] + EDGE_LOW_MEMORY_FLAGS)
     else:
         import webbrowser
         webbrowser.open(url)
